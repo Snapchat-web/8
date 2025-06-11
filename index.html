@@ -44,11 +44,16 @@
       margin-top: 10px;
       font-size: 14px;
     }
-    #forgotPassword {
-      color: blue;
-      cursor: pointer;
+    .links-container {
+      display: flex;
+      justify-content: space-between;
       margin-top: 10px;
       font-size: 14px;
+    }
+    .link {
+      color: blue;
+      font-weight: bold;
+      cursor: pointer;
       user-select: none;
     }
   </style>
@@ -60,7 +65,10 @@
       <input type="text" id="username" placeholder="Nom d'utilisateur ou e-mail" required />
       <input type="password" id="password" placeholder="Mot de passe" required />
       <button type="submit">Connexion</button>
-      <p id="forgotPassword">Mot de passe oublié</p>
+      <div class="links-container">
+        <p class="link" id="signupLink">S'inscrire</p>
+        <p class="link" id="forgotPassword">Mot de passe oublié</p>
+      </div>
     </form>
     <p id="errorMessage">Le nom d'utilisateur ou le mot de passe est incorrect.</p>
   </div>
