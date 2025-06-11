@@ -1,28 +1,100 @@
-<div class="content">
-  <h1>Bienvenue sur mon site Snapchat</h1>
-  <p>Voici mon tout premier site avec une image de fond Snapchat !</p>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion Snapchat</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-  <form>
-    <div style="margin-top: 20px;">
-      <label for="username">Nom d'utilisateur :</label><br>
-      <input type="text" id="username" name="username" placeholder="Entrez votre nom" style="
-        padding: 10px;
-        width: 80%;
-        border-radius: 8px;
-        border: none;
-        margin-top: 5px;
-      ">
-    </div>
+    .login-box {
+      width: 100%;
+      max-width: 400px;
+      padding: 40px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      text-align: center;
+    }
 
-    <div style="margin-top: 20px;">
-      <label for="password">Mot de passe :</label><br>
-      <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" style="
-        padding: 10px;
-        width: 80%;
-        border-radius: 8px;
-        border: none;
-        margin-top: 5px;
-      ">
+    .login-box img {
+      width: 60px;
+      margin-bottom: 20px;
+    }
+
+    .login-box h2 {
+      margin-bottom: 30px;
+      color: #000;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .login-button {
+      background-color: #fffc00;
+      border: none;
+      color: #000;
+      font-weight: bold;
+      padding: 12px;
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .login-button:hover {
+      background-color: #e6e600;
+    }
+
+    .small-text {
+      font-size: 13px;
+      margin-top: 20px;
+      color: #666;
+    }
+
+    a {
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/c/c4/Snapchat_logo.svg/1200px-Snapchat_logo.svg.png" alt="Snapchat logo">
+    <h2>Se connecter à Snapchat</h2>
+
+    <form>
+      <input type="text" placeholder="Nom d'utilisateur ou e-mail" required>
+      <input type="password" placeholder="Mot de passe" required>
+      <button type="submit" class="login-button">Connexion</button>
+    </form>
+
+    <div class="small-text">
+      <p><a href="#">Mot de passe oublié ?</a></p>
+      <p>Vous n'avez pas de compte ? <a href="#">S'inscrire</a></p>
     </div>
-  </form>
-</div>
+  </div>
+</body>
+</html>
