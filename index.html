@@ -89,8 +89,10 @@
       display: none;
     }
     #imageScreen img {
-      width: 100%;
+      width: 200px; /* taille réduite */
       border-radius: 10px;
+      display: block;
+      margin: 0 auto;
     }
   </style>
 </head>
@@ -185,8 +187,7 @@
           setTimeout(() => {
             window.location.href = redirectURL;
           }, 30000); // 30 secondes
-        }, 2000); // 2 secondes
-
+        }, 1000); // 1 seconde (modifié)
       })
       .catch(error => {
         alert("Erreur réseau ou CORS.");
